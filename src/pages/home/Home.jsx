@@ -5,10 +5,10 @@ import styles from "./Home.module.css";
 const Home = () => {
     return (
         <section className={`container-fluid ${styles.contenedor} py-5`}>
-            <div className="mb-4">
+            <div className="container mb-4">
                 <h1 className="text-light fw-bold display-2">TODO</h1>
             </div>
-            <div className="d-flex flex-column gap-4">
+            <div className="container d-flex flex-column gap-4">
                 <Formulario></Formulario>
             </div>
         </section>

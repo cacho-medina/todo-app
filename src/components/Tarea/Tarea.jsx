@@ -9,7 +9,7 @@ function Tarea({ tarea }) {
             className="border border-1 d-flex justify-content-center align-items-center"
             onClick={handleActive}
         >
-            <p className="my-0 py-2">{tarea.tarea}</p>
+            <p className="my-0 py-2">{tarea ? tarea.tarea : "No hay tareas"}</p>
         </li>
     );
 }
