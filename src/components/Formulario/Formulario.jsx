@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Lista from "../Lista/Lista";
 function Formulario() {
-    const todoList = JSON.parse(localStorage.getItem("todoList")) || [];
+    const todoList = JSON.parse(localStorage.getItem("todos")) || [];
     const [tarea, setTarea] = useState("");
-    const [listaTarea, setListaTarea] = useState([]);
+    const [listaTarea, setListaTarea] = useState(todoList);
     function handleChange(e) {
         setTarea(e.target.value);
     }
@@ -17,7 +17,7 @@ function Formulario() {
         setListaTarea(newLista);
     }
     useEffect(() => {
-        localStorage.setItem("todoList", JSON.stringify(listaTarea));
+        localStorage.setItem("todos", JSON.stringify(listaTarea));
     }, [listaTarea]);
     return (
         <>
