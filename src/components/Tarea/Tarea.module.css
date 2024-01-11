@@ -1,0 +1,6 @@
+.done {
+    text-decoration: line-through;
+    background-color: #af40408b;
+    transition: all 0.2s ease;
+    color: #fff;
+}
