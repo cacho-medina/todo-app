@@ -1,3 +1,13 @@
 .shadow {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+.max {
+    max-height: 55vh;
+    overflow-y: auto;
+}
+.max::-webkit-scrollbar {
+    width: 8px;
+}
+.max::-webkit-scrollbar-thumb {
+    background-color: #b1b1b1;
+}

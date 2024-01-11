@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Lista from "../Lista/Lista";
 function Formulario() {
+    const todoList = JSON.parse(localStorage.getItem("todoList")) || [];
     const [tarea, setTarea] = useState("");
     const [listaTarea, setListaTarea] = useState([]);
     function handleChange(e) {
@@ -11,7 +12,13 @@ function Formulario() {
         setListaTarea([...listaTarea, tarea]);
         setTarea("");
     }
-    console.log(tarea);
+    function handleDelete(descripcion) {
+        const newLista = listaTarea.filter((task) => task !== descripcion);
+        setListaTarea(newLista);
+    }
+    useEffect(() => {
+        localStorage.setItem("todoList", JSON.stringify(listaTarea));
+    }, [listaTarea]);
     return (
         <>
             <form
@@ -27,11 +34,15 @@ function Formulario() {
                     onChange={handleChange}
                     value={tarea}
                 />
-                <button className="btn btn-outline-light" type="submit">
+                <button
+                    className="btn btn-outline-light"
+                    type="submit"
+                    disabled={!tarea}
+                >
                     agregar
                 </button>
             </form>
-            <Lista listaTarea={listaTarea}></Lista>
+            <Lista listaTarea={listaTarea} handleDelete={handleDelete}></Lista>
         </>
     );
 }
