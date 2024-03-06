@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Lista from "../Lista/Lista";
+import { motion } from "framer-motion";
+
 function Formulario() {
     const todoList = JSON.parse(localStorage.getItem("todos")) || [];
     const [tarea, setTarea] = useState("");
@@ -26,7 +28,8 @@ function Formulario() {
                 onSubmit={handleSubmit}
                 className="border border-0 rounded d-flex gap-1"
             >
-                <input
+                <motion.input
+                    whileTap={{ scale: 0.9 }}
                     className="form-control"
                     type="text"
                     name="tarea"
@@ -34,13 +37,14 @@ function Formulario() {
                     onChange={handleChange}
                     value={tarea}
                 />
-                <button
+                <motion.button
+                    whileHover={{ scale: 1.1 }}
                     className="btn btn-outline-light"
                     type="submit"
                     disabled={!tarea}
                 >
                     agregar
-                </button>
+                </motion.button>
             </form>
             <Lista listaTarea={listaTarea} handleDelete={handleDelete}></Lista>
         </>
