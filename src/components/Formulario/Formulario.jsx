@@ -1,26 +1,61 @@
 import { useEffect, useState } from "react";
 import Lista from "../Lista/Lista";
 import { motion } from "framer-motion";
+import {
+    getTareas,
+    editTarea,
+    deleteTarea,
+    crearTarea,
+} from "../../helpers/queries";
 
 function Formulario() {
-    const todoList = JSON.parse(localStorage.getItem("todos")) || [];
-    const [tarea, setTarea] = useState("");
-    const [listaTarea, setListaTarea] = useState(todoList);
+    const [tarea, setTarea] = useState({
+        nombre: "",
+    });
+    const [listaTareas, setListaTareas] = useState([]);
+
     function handleChange(e) {
-        setTarea(e.target.value);
+        setTarea({ nombre: e.target.value });
     }
+
     function handleSubmit(e) {
         e.preventDefault();
-        setListaTarea([...listaTarea, tarea]);
-        setTarea("");
+        if (!tarea.nombre.length) {
+            alert("Ingrese la tarea!!");
+        } else {
+            crearNuevaTarea(tarea);
+            setTarea({
+                nombre: "",
+            });
+        }
     }
-    function handleDelete(descripcion) {
-        const newLista = listaTarea.filter((task) => task !== descripcion);
-        setListaTarea(newLista);
+
+    async function crearNuevaTarea(tarea) {
+        const res = await crearTarea(tarea);
+        if (!res.ok) {
+            alert("Error al obtener la tarea");
+        }
     }
+
+    async function obtenertareas() {
+        const res = await getTareas();
+        if (res.ok) {
+            const lista = await res.json();
+            setListaTareas(lista);
+        }
+    }
+
+    async function borrarTarea(id) {
+        const res = await deleteTarea(id);
+        if (!res.ok) {
+            alert("Error al borrar la tarea");
+        }
+    }
+
     useEffect(() => {
-        localStorage.setItem("todos", JSON.stringify(listaTarea));
-    }, [listaTarea]);
+        obtenertareas();
+    }, []);
+
     return (
         <>
             <form
@@ -35,18 +70,17 @@ function Formulario() {
                     name="tarea"
                     placeholder="ingrese la tarea..."
                     onChange={handleChange}
-                    value={tarea}
+                    value={tarea.nombre}
                 />
                 <motion.button
                     whileHover={{ scale: 1.1 }}
                     className="btn btn-outline-light"
                     type="submit"
-                    disabled={!tarea}
                 >
                     agregar
                 </motion.button>
             </form>
-            <Lista listaTarea={listaTarea} handleDelete={handleDelete}></Lista>
+            <Lista listaTareas={listaTareas} borrarTarea={borrarTarea}></Lista>
         </>
     );
 }

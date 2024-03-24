@@ -1,32 +1,26 @@
 import Tarea from "../Tarea/Tarea";
 import Error from "../Error/Error";
 import styles from "./Lista.module.css";
-import { motion, AnimatePresence } from "framer-motion";
 
-function Lista({ listaTarea, handleDelete }) {
+function Lista({ listaTareas, borrarTarea }) {
     return (
-        <motion.ul
-            layout
-            transition={{ staggerChildren: 0.5 }}
+        <ul
             className={`bg-light border rounded px-0 ${styles.shadow} ${styles.max}`}
         >
-            <AnimatePresence>
-                {!listaTarea.length ? (
-                    <Error />
-                ) : (
-                    listaTarea.map((tarea, index) => {
-                        return (
-                            <Tarea
-                                tarea={tarea}
-                                key={index}
-                                index={index}
-                                handleDelete={handleDelete}
-                            />
-                        );
-                    })
-                )}
-            </AnimatePresence>
-        </motion.ul>
+            {!listaTareas.length ? (
+                <Error />
+            ) : (
+                listaTareas.map((tarea) => {
+                    return (
+                        <Tarea
+                            tarea={tarea}
+                            key={tarea._id}
+                            borrarTarea={borrarTarea}
+                        />
+                    );
+                })
+            )}
+        </ul>
     );
 }
 
