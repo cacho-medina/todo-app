@@ -27,7 +27,7 @@ export const editTarea = async (data, id) => {
         const res = await fetch(`${url}/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: data,
+            body: JSON.stringify(data),
         });
         return res;
     } catch (error) {

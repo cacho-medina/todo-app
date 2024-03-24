@@ -13,6 +13,7 @@ function Formulario() {
         nombre: "",
     });
     const [listaTareas, setListaTareas] = useState([]);
+    const [edit, setEdit] = useState(false);
 
     function handleChange(e) {
         setTarea({ nombre: e.target.value });
@@ -30,11 +31,16 @@ function Formulario() {
         }
     }
 
+    function enableEdit() {
+        setEdit(!edit);
+    }
+
     async function crearNuevaTarea(tarea) {
         const res = await crearTarea(tarea);
         if (!res.ok) {
             alert("Error al obtener la tarea");
         }
+        obtenertareas();
     }
 
     async function obtenertareas() {
@@ -50,6 +56,7 @@ function Formulario() {
         if (!res.ok) {
             alert("Error al borrar la tarea");
         }
+        obtenertareas();
     }
 
     useEffect(() => {
@@ -80,7 +87,22 @@ function Formulario() {
                     agregar
                 </motion.button>
             </form>
-            <Lista listaTareas={listaTareas} borrarTarea={borrarTarea}></Lista>
+            <Lista
+                listaTareas={listaTareas}
+                borrarTarea={borrarTarea}
+                edit={edit}
+                setEdit={setEdit}
+                editTarea={editTarea}
+                obtenertareas={obtenertareas}
+            ></Lista>
+            <div>
+                <button
+                    className="btn btn-outline-secondary"
+                    onClick={() => enableEdit()}
+                >
+                    {!edit ? "Habilitar edicion" : "Deshabilitar edicion"}
+                </button>
+            </div>
         </>
     );
 }

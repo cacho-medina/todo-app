@@ -1,0 +1,9 @@
+.edit {
+    border: unset !important;
+    box-shadow: unset !important;
+    background-color: inherit;
+
+    &:focus {
+        box-shadow: 0 0 0 0.2rem #998ef796 !important;
+    }
+}
