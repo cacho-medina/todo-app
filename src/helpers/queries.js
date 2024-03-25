@@ -1,4 +1,4 @@
-const url = "http://localhost:4001/api/tareas";
+const url = import.meta.env.VITE_API_TAREAS;
 
 export const getTareas = async () => {
     try {
